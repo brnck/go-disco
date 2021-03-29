@@ -2,16 +2,15 @@ package app
 
 import (
 	"github.com/brnck/go-disco/app/output"
-	"github.com/brnck/go-disco/app/output/ledstrip"
-	"github.com/brnck/go-disco/app/output/stdout"
-	"github.com/brnck/go-disco/app/utils"
+	"github.com/brnck/go-disco/app/programs"
 	"log"
 	"os"
 )
 
 type App struct {
-	Output output.Output
-	Logger *log.Logger
+	Output   output.Output
+	Logger   *log.Logger
+	programs *programs.Programs
 }
 
 func (a *App) SetOutput(o output.Output) {
@@ -24,39 +23,39 @@ func (a *App) SetLogger(l *log.Logger) {
 
 func Init() (*App, error) {
 	app := &App{
-		Logger: log.New(os.Stdout, "", log.LstdFlags),
+		Logger:   log.New(os.Stdout, "", log.LstdFlags),
+		programs: programs.New(),
 	}
 
-	standardOutput, err := initializeStandardOutput(app.Logger)
+	standardOutput, err := output.InitializeStandardOutput(app.Logger)
 
 	if err != nil {
 		return nil, err
 	}
 	app.SetOutput(standardOutput)
 
+	if err := initializePrograms(app); err != nil {
+		return nil, err
+	}
+
 	return app, nil
 }
 
-func initializeStandardOutput(l *log.Logger) (*stdout.Stdout, error) {
-	ws, err := stdout.Init(l)
-	if err != nil {
-		return nil, err
+func initializePrograms(app *App) error {
+	tc := programs.NewTheaterChase()
+	trc := programs.NewTheaterRainbowChase()
+
+	if err := app.programs.AddProgram(tc.Name, tc); err != nil {
+		return err
+	}
+	if err := app.programs.AddProgram(trc.Name, trc); err != nil {
+		return err
 	}
 
-	return ws, nil
-}
-
-func initializeWS2812Output() (*ledstrip.Led, error) {
-	ws, err := ledstrip.Init()
-	if err != nil {
-		return nil, err
-	}
-
-	return ws, err
+	return nil
 }
 
 func (a *App) Run() {
-	color := utils.RgbToColor(255, 255, 255)
-
-	a.Output.SetLed(0, color)
+	a.programs.RunProgram("theater_chase", a.Output)
+	a.programs.RunProgram("theater_rainbow_chase", a.Output)
 }

@@ -1,30 +1,30 @@
-package ledstrip
+package output
 
 import (
 	ws2811 "github.com/rpi-ws281x/rpi-ws281x-go"
 )
 
-type Led struct {
+type led struct {
 	ws *ws2811.WS2811
 }
 
-func (l *Led) SetLed(i int, color uint32) {
+func (l *led) SetLed(i int, color uint32) {
 	l.ws.Leds(0)[i] = color
 }
 
-func (l *Led) Render() error {
+func (l *led) Render() error {
 	return l.ws.Render()
 }
 
-func (l *Led) Open() error {
+func (l *led) Open() error {
 	return l.ws.Init()
 }
 
-func (l *Led) Close() {
+func (l *led) Close() {
 	l.ws.Fini()
 }
 
-func Init() (*Led, error) {
+func NewLed() (*led, error) {
 	opt := ws2811.DefaultOptions
 	opt.Channels[0].Brightness = 128
 	opt.Channels[0].LedCount = 60
@@ -47,5 +47,5 @@ func Init() (*Led, error) {
 		return nil, err
 	}
 
-	return &Led{ws: dev}, nil
+	return &led{ws: dev}, nil
 }
