@@ -32,7 +32,7 @@ func NewLed() (*led, error) {
 	opt.Channels[0] = ws2811.ChannelOption{
 		GpioPin:    18,
 		Invert:     false,
-		LedCount:   70,
+		LedCount:   201,
 		StripeType: ws2811.WS2812Strip,
 		Brightness: 64,
 		WShift:     1,

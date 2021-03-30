@@ -1,37 +1,39 @@
 package programs
 
-import "github.com/brnck/go-disco/app/output"
+import (
+	"github.com/brnck/go-disco/app/output"
+	"sync"
+)
 
 type Programs struct {
-	programs map[string]program
+	programs map[string]Program
 }
 
-type program interface {
-	run(output output.Output)
+type Program interface {
+	getName() string
+	Run(output output.Output, start int, end int, wg *sync.WaitGroup)
 }
 
 func New() *Programs {
 	return &Programs{
-		programs: make(map[string]program),
+		programs: make(map[string]Program),
 	}
 }
 
-func (p *Programs) AddProgram(name string, program program) error {
-	if _, exists := p.programs[name]; exists {
+func (p *Programs) AddProgram(program Program) error {
+	if _, exists := p.programs[program.getName()]; exists {
 		return ErrProgramExists
 	}
 
-	p.programs[name] = program
+	p.programs[program.getName()] = program
 
 	return nil
 }
 
-func (p *Programs) RunProgram(name string, o output.Output) error {
+func (p *Programs) GetProgram(name string) (Program, error) {
 	if _, exists := p.programs[name]; !exists {
-		return ErrProgramNotExists
+		return nil, ErrProgramNotExists
 	}
 
-	p.programs[name].run(o)
-
-	return nil
+	return p.programs[name], nil
 }
