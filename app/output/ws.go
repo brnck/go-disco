@@ -1,6 +1,7 @@
 package output
 
 import (
+	"github.com/brnck/go-disco/app/config"
 	ws2811 "github.com/rpi-ws281x/rpi-ws281x-go"
 )
 
@@ -24,23 +25,11 @@ func (l *led) Close() {
 	l.ws.Fini()
 }
 
-func NewLed() (*led, error) {
+func newLed(c *config.Config) (*led, error) {
 	opt := ws2811.DefaultOptions
-	opt.Channels[0].Brightness = 128
-	opt.Channels[0].LedCount = 60
-
-	opt.Channels[0] = ws2811.ChannelOption{
-		GpioPin:    18,
-		Invert:     false,
-		LedCount:   201,
-		StripeType: ws2811.WS2812Strip,
-		Brightness: 64,
-		WShift:     1,
-		RShift:     1,
-		GShift:     1,
-		BShift:     1,
-		Gamma:      nil,
-	}
+	opt.Channels[0].Brightness = c.LedBrightness
+	opt.Channels[0].LedCount = c.LedCount
+	opt.Channels[0].GpioPin = c.LedPin
 
 	dev, err := ws2811.MakeWS2811(&opt)
 	if err != nil {

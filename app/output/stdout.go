@@ -26,6 +26,6 @@ func (s stdout) Close() {
 	s.log.Println("Closing LED channel")
 }
 
-func NewStdout(l *log.Logger) (*stdout, error) {
+func newStdout(l *log.Logger) (*stdout, error) {
 	return &stdout{log: l}, nil
 }

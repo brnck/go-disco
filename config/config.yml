@@ -1,0 +1,12 @@
+---
+# Supported outputs: stdout, ledstrip
+output: ledstrip
+
+# GPIO pin connected to the pixels (18 uses PWM!).
+led_pin: 18
+
+# Number of LED pixels in a strip
+led_count: 300
+
+# Set to 0 for darkest and 255 for brightest
+led_brightness: 128

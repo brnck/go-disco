@@ -1,6 +1,7 @@
 package app
 
 import (
+	"github.com/brnck/go-disco/app/config"
 	"github.com/brnck/go-disco/app/output"
 	"github.com/brnck/go-disco/app/programs"
 	"github.com/brnck/go-disco/app/scenes"
@@ -10,17 +11,22 @@ import (
 
 type App struct {
 	Output   output.Output
+	Config   *config.Config
 	Logger   *log.Logger
 	programs *programs.Programs
 	scenes   *scenes.Scene
 }
 
-func (a *App) SetOutput(o output.Output) {
+func (a *App) setOutput(o output.Output) {
 	a.Output = o
 }
 
-func (a *App) SetLogger(l *log.Logger) {
+func (a *App) setLogger(l *log.Logger) {
 	a.Logger = l
+}
+
+func (a *App) setConfig(c *config.Config) {
+	a.Config = c
 }
 
 func Init() (*App, error) {
@@ -30,13 +36,17 @@ func Init() (*App, error) {
 		scenes:   scenes.New(),
 	}
 
-	//out, err := output.InitializeStandardOutput(app.Logger)
-	out, err := output.InitializeWS2812Output()
-
+	cfg, err := config.ParseConfig()
 	if err != nil {
 		return nil, err
 	}
-	app.SetOutput(out)
+	app.setConfig(cfg)
+
+	out, err := output.InitializeOutput(app.Config, app.Logger)
+	if err != nil {
+		return nil, err
+	}
+	app.setOutput(out)
 
 	if err := registerPrograms(app); err != nil {
 		return nil, err
