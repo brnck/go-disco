@@ -7,10 +7,23 @@ import (
 )
 
 type Config struct {
-	LedPin        int    `mapstructure:"led_pin"`
-	LedCount      int    `mapstructure:"led_count"`
-	LedBrightness int    `mapstructure:"led_brightness"`
-	Output        string `mapstructure:"output"`
+	LedPin        int      `mapstructure:"led_pin"`
+	LedCount      int      `mapstructure:"led_count"`
+	LedBrightness int      `mapstructure:"led_brightness"`
+	Output        string   `mapstructure:"output"`
+	Scenes        []Scenes `mapstructure:"scenes"`
+}
+
+type Scenes struct {
+	Name     string    `mapstructure:"name"`
+	Interval int       `mapstructure:"interval"`
+	Programs []Program `mapstructure:"programs"`
+}
+
+type Program struct {
+	Key   string `mapstructure:"key"`
+	Start int    `mapstructure:"start"`
+	End   int    `mapstructure:"end"`
 }
 
 const (

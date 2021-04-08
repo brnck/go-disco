@@ -70,40 +70,20 @@ func registerPrograms(app *App) error {
 }
 
 func (a *App) Run() error {
-	sp := scenes.NewSceneProgram()
-
-	p, err := a.programs.GetProgram("theater_chase")
-	if err != nil {
-		return err
+	for _, scene := range a.Config.Scenes {
+		sp := scenes.NewSceneProgram()
+		for _, program := range scene.Programs {
+			p, err := a.programs.GetProgram(program.Key)
+			if err != nil {
+				return nil
+			}
+			sp.SetProgram(p)
+			sp.SetStart(program.Start)
+			sp.SetEnd(program.End)
+			a.scenes.AddProgram(sp)
+		}
+		a.scenes.Execute(a.Output)
 	}
-
-	sp.SetStart(0)
-	sp.SetEnd(10)
-	sp.SetProgram(p)
-
-	a.scenes.AddProgram(sp)
-
-	p, err = a.programs.GetProgram("theater_rainbow_chase")
-	if err != nil {
-		return err
-	}
-	sp.SetStart(190)
-	sp.SetEnd(198)
-	sp.SetProgram(p)
-
-	a.scenes.AddProgram(sp)
-
-	p, err = a.programs.GetProgram("ranged_rainbow_cycle")
-	if err != nil {
-		return err
-	}
-
-	sp.SetStart(10)
-	sp.SetEnd(190)
-	sp.SetProgram(p)
-	a.scenes.AddProgram(sp)
-
-	a.scenes.Execute(a.Output)
 
 	return nil
 }
