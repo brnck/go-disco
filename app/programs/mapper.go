@@ -33,6 +33,8 @@ func (m mapper) getName() string {
 }
 
 func (m mapper) Run(o output.Output, c config.Program, wg *sync.WaitGroup) {
+	defer wg.Done()
+
 	for index, mapper := range c.Map {
 		for i := mapper.Min; i < mapper.Max; i++ {
 			o.SetLed(i, utils.RgbToColor(colors[index][0], colors[index][1], colors[index][2]))

@@ -26,6 +26,7 @@ type Program struct {
 	End        int    `mapstructure:"end"`
 	Iterations int    `mapstructure:"iterations"`
 	WaitTime   int    `mapstructure:"wait_time"`
+	Speed      int    `mapstructure:"speed"`
 	Red        int    `mapstructure:"red"`
 	Green      int    `mapstructure:"green"`
 	Blue       int    `mapstructure:"blue"`
@@ -48,6 +49,7 @@ const (
 	redDefault           = 128
 	greenDefault         = 128
 	blueDefault          = 128
+	speedDefault         = 100
 )
 
 func ParseConfig() (*Config, error) {
@@ -94,6 +96,7 @@ func setDefaults() {
 
 	viper.SetDefault("iterations", iterationsDefault)
 	viper.SetDefault("wait_time", waitTimeDefault)
+	viper.SetDefault("speed", speedDefault)
 	viper.SetDefault("red", redDefault)
 	viper.SetDefault("green", greenDefault)
 	viper.SetDefault("blue", blueDefault)

@@ -71,6 +71,24 @@ func registerPrograms(app *App) error {
 	if err := app.programs.AddProgram(programs.NewMapper()); err != nil {
 		return err
 	}
+	if err := app.programs.AddProgram(programs.NewChaosColors()); err != nil {
+		return err
+	}
+	if err := app.programs.AddProgram(programs.NewChaosFillDown()); err != nil {
+		return err
+	}
+	if err := app.programs.AddProgram(programs.NewColorChase()); err != nil {
+		return err
+	}
+	if err := app.programs.AddProgram(programs.NewColorChaseReverse()); err != nil {
+		return err
+	}
+	if err := app.programs.AddProgram(programs.NewFadeRgb()); err != nil {
+		return err
+	}
+	if err := app.programs.AddProgram(programs.NewFadeInOut()); err != nil {
+		return err
+	}
 
 	return nil
 }

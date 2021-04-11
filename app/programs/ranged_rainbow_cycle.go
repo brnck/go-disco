@@ -5,7 +5,6 @@ import (
 	"github.com/brnck/go-disco/app/output"
 	"github.com/brnck/go-disco/app/utils"
 	"sync"
-	"time"
 )
 
 const rangedRainbowCycleName = "ranged_rainbow_cycle"
@@ -25,7 +24,7 @@ func (rrc rangedRainbowCycle) Run(o output.Output, c config.Program, wg *sync.Wa
 			o.SetLed(z, utils.ColorRoll(((z*256/c.End)+i)&255))
 		}
 		o.Render()
-		time.Sleep(time.Duration(c.WaitTime) * time.Millisecond)
+		sleepMilliseconds(c.WaitTime)
 	}
 }
 

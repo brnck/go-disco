@@ -50,3 +50,7 @@ func fadeToBlack(output output.Output, position int, fadeValue uint32) {
 func getCurrentMilis() int {
 	return time.Now().Second()
 }
+
+func sleepMilliseconds(duration int) {
+	time.Sleep(time.Duration(duration) * time.Millisecond)
+}

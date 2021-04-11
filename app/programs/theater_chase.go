@@ -5,7 +5,6 @@ import (
 	"github.com/brnck/go-disco/app/output"
 	"github.com/brnck/go-disco/app/utils"
 	"sync"
-	"time"
 )
 
 const theaterChaseName = "theater_chase"
@@ -27,7 +26,7 @@ func (tc theaterChase) Run(o output.Output, c config.Program, wg *sync.WaitGroup
 				o.SetLed(j+z, utils.RgbToColor(128, 128, 128))
 			}
 			o.Render()
-			time.Sleep(time.Duration(c.WaitTime) * time.Millisecond)
+			sleepMilliseconds(c.WaitTime)
 			for z := c.Start; z < c.End; z += 3 {
 				o.SetLed(j+z, utils.RgbToColor(0, 0, 0))
 			}
