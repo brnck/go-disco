@@ -14,7 +14,7 @@ func (s *Scene) Execute(o output.Output) {
 
 	for _, program := range s.sceneProgram {
 		wg.Add(1)
-		go program.programRunner.Run(o, program.start, program.end, &wg)
+		go program.programRunner.Run(o, program.programConfig, &wg)
 	}
 
 	wg.Wait()

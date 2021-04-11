@@ -1,6 +1,7 @@
 package programs
 
 import (
+	"github.com/brnck/go-disco/app/config"
 	"github.com/brnck/go-disco/app/output"
 	"sync"
 )
@@ -11,7 +12,7 @@ type Programs struct {
 
 type Program interface {
 	getName() string
-	Run(output output.Output, start int, end int, wg *sync.WaitGroup)
+	Run(output output.Output, c config.Program, wg *sync.WaitGroup)
 }
 
 func New() *Programs {

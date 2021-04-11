@@ -21,9 +21,20 @@ type Scenes struct {
 }
 
 type Program struct {
-	Key   string `mapstructure:"key"`
-	Start int    `mapstructure:"start"`
-	End   int    `mapstructure:"end"`
+	Key        string `mapstructure:"key"`
+	Start      int    `mapstructure:"start"`
+	End        int    `mapstructure:"end"`
+	Iterations int    `mapstructure:"iterations"`
+	WaitTime   int    `mapstructure:"wait_time"`
+	Red        int    `mapstructure:"red"`
+	Green      int    `mapstructure:"green"`
+	Blue       int    `mapstructure:"blue"`
+	Map        []Map  `mapstructure:"map"`
+}
+
+type Map struct {
+	Min int `mapstructure:"min"`
+	Max int `mapstructure:"max"`
 }
 
 const (
@@ -32,6 +43,11 @@ const (
 	ledBrightnessDefault = 128
 	OutputLedStrip       = "ledstrip"
 	OutputStdout         = "stdout"
+	iterationsDefault    = 50
+	waitTimeDefault      = 100
+	redDefault           = 128
+	greenDefault         = 128
+	blueDefault          = 128
 )
 
 func ParseConfig() (*Config, error) {
@@ -75,4 +91,11 @@ func setDefaults() {
 	viper.SetDefault("led_pin", ledPinDefault)
 	viper.SetDefault("led_count", ledCountDefault)
 	viper.SetDefault("led_brightness", ledBrightnessDefault)
+
+	viper.SetDefault("iterations", iterationsDefault)
+	viper.SetDefault("wait_time", waitTimeDefault)
+	viper.SetDefault("red", redDefault)
+	viper.SetDefault("green", greenDefault)
+	viper.SetDefault("blue", blueDefault)
+	viper.SetDefault("map", make([]Map, 0))
 }

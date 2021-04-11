@@ -7,6 +7,7 @@ import (
 
 type Output interface {
 	SetLed(i int, color uint32)
+	GetLedColor(i int) uint32
 	Render() error
 	Open() error
 	Close()

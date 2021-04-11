@@ -1,6 +1,7 @@
 package programs
 
 import (
+	"github.com/brnck/go-disco/app/config"
 	"github.com/brnck/go-disco/app/output"
 	"github.com/brnck/go-disco/app/utils"
 	"sync"
@@ -10,28 +11,24 @@ import (
 const theaterRainbowChaseName = "theater_rainbow_chase"
 
 type theaterRainbowChase struct {
-	name       string
-	start      int
-	end        int
-	iterations int
-	wait       int
+	name string
 }
 
 func (trc theaterRainbowChase) getName() string {
 	return trc.name
 }
 
-func (trc theaterRainbowChase) Run(o output.Output, start int, end int, wg *sync.WaitGroup) {
+func (trc theaterRainbowChase) Run(o output.Output, c config.Program, wg *sync.WaitGroup) {
 	defer wg.Done()
 
-	for i := 0; i < trc.iterations; i++ {
+	for i := 0; i < c.Iterations; i++ {
 		for j := 0; j < 3; j++ {
-			for k := start; k < end; k += 3 {
+			for k := c.Start; k < c.End; k += 3 {
 				o.SetLed(j+k, utils.ColorRoll((k+i)%255))
 			}
 			o.Render()
-			time.Sleep(time.Duration(trc.wait) * time.Millisecond)
-			for z := start; z < end; z += 3 {
+			time.Sleep(time.Duration(c.WaitTime) * time.Millisecond)
+			for z := c.Start; z < c.End; z += 3 {
 				o.SetLed(j+z, utils.RgbToColor(0, 0, 0))
 			}
 		}
@@ -40,8 +37,6 @@ func (trc theaterRainbowChase) Run(o output.Output, start int, end int, wg *sync
 
 func NewTheaterRainbowChase() *theaterRainbowChase {
 	return &theaterRainbowChase{
-		name:       theaterRainbowChaseName,
-		iterations: 100,
-		wait:       50,
+		name: theaterRainbowChaseName,
 	}
 }

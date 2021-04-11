@@ -65,6 +65,12 @@ func registerPrograms(app *App) error {
 	if err := app.programs.AddProgram(programs.NewRangedRainbowCycle()); err != nil {
 		return err
 	}
+	if err := app.programs.AddProgram(programs.NewStrobe()); err != nil {
+		return err
+	}
+	if err := app.programs.AddProgram(programs.NewMapper()); err != nil {
+		return err
+	}
 
 	return nil
 }
@@ -78,8 +84,7 @@ func (a *App) Run() error {
 				return nil
 			}
 			sp.SetProgram(p)
-			sp.SetStart(program.Start)
-			sp.SetEnd(program.End)
+			sp.SetProgramConfig(program)
 			a.scenes.AddProgram(sp)
 		}
 		a.scenes.Execute(a.Output)

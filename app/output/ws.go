@@ -13,6 +13,10 @@ func (l *led) SetLed(i int, color uint32) {
 	l.ws.Leds(0)[i] = color
 }
 
+func (l *led) GetLedColor(i int) uint32 {
+	return l.ws.Leds(0)[i]
+}
+
 func (l *led) Render() error {
 	return l.ws.Render()
 }

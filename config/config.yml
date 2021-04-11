@@ -12,7 +12,7 @@ led_count: 300
 led_brightness: 128
 
 scenes:
-  - name: map
+  - name: test
     interval: 1
     programs:
       - key: ranged_rainbow_cycle
@@ -21,3 +21,20 @@ scenes:
       - key: ranged_rainbow_cycle
         start: 200
         end: 300
+  - name: map
+    interval: 1
+    programs:
+      - key: mapper
+        map:
+          - min: 1
+            max: 25
+          - min: 25
+            max: 50
+          - min: 50
+            max: 150
+          - min: 150
+            max: 250
+          - min: 250
+            max: 275
+          - min: 275
+            max: 300
