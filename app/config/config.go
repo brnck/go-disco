@@ -21,16 +21,19 @@ type Scenes struct {
 }
 
 type Program struct {
-	Key        string `mapstructure:"key"`
-	Start      int    `mapstructure:"start"`
-	End        int    `mapstructure:"end"`
-	Iterations int    `mapstructure:"iterations"`
-	WaitTime   int    `mapstructure:"wait_time"`
-	Speed      int    `mapstructure:"speed"`
-	Red        int    `mapstructure:"red"`
-	Green      int    `mapstructure:"green"`
-	Blue       int    `mapstructure:"blue"`
-	Map        []Map  `mapstructure:"map"`
+	Key         string `mapstructure:"key"`
+	Start       int    `mapstructure:"start"`
+	End         int    `mapstructure:"end"`
+	Iterations  int    `mapstructure:"iterations"`
+	WaitTime    int    `mapstructure:"wait_time"`
+	Speed       int    `mapstructure:"speed"`
+	Red         int    `mapstructure:"red"`
+	Green       int    `mapstructure:"green"`
+	Blue        int    `mapstructure:"blue"`
+	Map         []Map  `mapstructure:"map"`
+	RandomDecay bool   `mapstructure:"random_decay"`
+	TrailDecay  int    `mapstructure:"trail_decay"`
+	Size        int    `mapstructure:"size"`
 }
 
 type Map struct {
@@ -101,4 +104,8 @@ func setDefaults() {
 	viper.SetDefault("green", greenDefault)
 	viper.SetDefault("blue", blueDefault)
 	viper.SetDefault("map", make([]Map, 0))
+
+	viper.SetDefault("random_decay", true)
+	viper.SetDefault("trail_decay", 64)
+	viper.SetDefault("size", 5)
 }

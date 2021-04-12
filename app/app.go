@@ -89,6 +89,21 @@ func registerPrograms(app *App) error {
 	if err := app.programs.AddProgram(programs.NewFadeInOut()); err != nil {
 		return err
 	}
+	if err := app.programs.AddProgram(programs.NewMeteorRain()); err != nil {
+		return err
+	}
+	if err := app.programs.AddProgram(programs.NewStaticRainbow()); err != nil {
+		return err
+	}
+	if err := app.programs.AddProgram(programs.NewSparkle()); err != nil {
+		return err
+	}
+	if err := app.programs.AddProgram(programs.NewSnowSparkle()); err != nil {
+		return err
+	}
+	if err := app.programs.AddProgram(programs.NewStaticColor()); err != nil {
+		return err
+	}
 
 	return nil
 }
