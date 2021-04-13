@@ -3,15 +3,9 @@ package programs
 import (
 	"github.com/brnck/go-disco/app/output"
 	"github.com/brnck/go-disco/app/utils"
+	"math/rand"
 	"time"
 )
-
-func setAllLEDColor(output output.Output, ledCount int, r int, g int, b int) {
-	for i := 0; i < ledCount; i++ {
-		output.SetLed(i, utils.RgbToColor(r, g, b))
-	}
-	output.Render()
-}
 
 func setLEDColorInRange(output output.Output, start int, end int, r int, g int, b int) {
 	for i := start; i < end; i++ {
@@ -47,10 +41,12 @@ func fadeToBlack(output output.Output, position int, fadeValue uint32) {
 	output.SetLed(position, utils.RgbToColor(int(r), int(g), int(b)))
 }
 
-func getCurrentMilis() int {
-	return time.Now().Second()
-}
-
 func sleepMilliseconds(duration int) {
 	time.Sleep(time.Duration(duration) * time.Millisecond)
+}
+
+func randomNumberBetween(start int, end int) int {
+	rand.Seed(time.Now().UnixNano())
+
+	return rand.Intn(end-start) + start
 }

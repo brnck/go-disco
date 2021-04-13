@@ -4,9 +4,7 @@ import (
 	"github.com/brnck/go-disco/app/config"
 	"github.com/brnck/go-disco/app/output"
 	"github.com/brnck/go-disco/app/utils"
-	"math/rand"
 	"sync"
-	"time"
 )
 
 const chaosFillDownName = "chaos_fill_down"
@@ -25,12 +23,9 @@ func (cfd chaosFillDown) Run(o output.Output, c config.Program, wg *sync.WaitGro
 	setLEDColorInRange(o, c.Start, c.End, 0, 0, 0)
 
 	for i := c.Start; i < c.End; i++ {
-		rand.Seed(time.Now().UnixNano())
-		r := rand.Intn(256)
-		rand.Seed(time.Now().UnixNano())
-		g := rand.Intn(256)
-		rand.Seed(time.Now().UnixNano())
-		b := rand.Intn(256)
+		r := randomNumberBetween(0, 256)
+		g := randomNumberBetween(0, 256)
+		b := randomNumberBetween(0, 256)
 
 		for j := c.Start; j < c.End-i; j++ {
 			o.SetLed(j, utils.RgbToColor(r, g, b))

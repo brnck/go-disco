@@ -4,9 +4,7 @@ import (
 	"github.com/brnck/go-disco/app/config"
 	"github.com/brnck/go-disco/app/output"
 	"github.com/brnck/go-disco/app/utils"
-	"math/rand"
 	"sync"
-	"time"
 )
 
 const sparkleName = "sparkle"
@@ -22,8 +20,7 @@ func (s sparkle) getName() string {
 func (s sparkle) Run(o output.Output, c config.Program, wg *sync.WaitGroup) {
 	defer wg.Done()
 
-	rand.Seed(time.Now().UnixNano())
-	pixel := rand.Intn(c.End-c.Start) + c.Start
+	pixel := randomNumberBetween(c.Start, c.End)
 
 	o.SetLed(pixel, utils.RgbToColor(c.Red, c.Green, c.Blue))
 	o.Render()

@@ -26,7 +26,7 @@ func (mr meteorRain) Run(o output.Output, c config.Program, wg *sync.WaitGroup) 
 	for i := c.Start; i < c.End; i++ {
 		for j := c.Start; j < c.End; j++ {
 			rand.Seed(time.Now().UnixNano())
-			if !c.RandomDecay || rand.Intn(10) > 5 {
+			if !c.RandomDecay || randomNumberBetween(0, 10) > 5 {
 				fadeToBlack(o, j, uint32(c.TrailDecay))
 			}
 		}

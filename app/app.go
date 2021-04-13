@@ -104,6 +104,21 @@ func registerPrograms(app *App) error {
 	if err := app.programs.AddProgram(programs.NewStaticColor()); err != nil {
 		return err
 	}
+	if err := app.programs.AddProgram(programs.NewRunningLightsReverse()); err != nil {
+		return err
+	}
+	if err := app.programs.AddProgram(programs.NewRunningLights()); err != nil {
+		return err
+	}
+	if err := app.programs.AddProgram(programs.NewTwinkle()); err != nil {
+		return err
+	}
+	if err := app.programs.AddProgram(programs.NewTwinkleRandom()); err != nil {
+		return err
+	}
+	if err := app.programs.AddProgram(programs.NewFire()); err != nil {
+		return err
+	}
 
 	return nil
 }

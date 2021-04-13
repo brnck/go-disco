@@ -21,19 +21,23 @@ type Scenes struct {
 }
 
 type Program struct {
-	Key         string `mapstructure:"key"`
-	Start       int    `mapstructure:"start"`
-	End         int    `mapstructure:"end"`
-	Iterations  int    `mapstructure:"iterations"`
-	WaitTime    int    `mapstructure:"wait_time"`
-	Speed       int    `mapstructure:"speed"`
-	Red         int    `mapstructure:"red"`
-	Green       int    `mapstructure:"green"`
-	Blue        int    `mapstructure:"blue"`
-	Map         []Map  `mapstructure:"map"`
-	RandomDecay bool   `mapstructure:"random_decay"`
-	TrailDecay  int    `mapstructure:"trail_decay"`
-	Size        int    `mapstructure:"size"`
+	Key            string `mapstructure:"key"`
+	Start          int    `mapstructure:"start"`
+	End            int    `mapstructure:"end"`
+	Iterations     int    `mapstructure:"iterations"`
+	WaitTime       int    `mapstructure:"wait_time"`
+	Speed          int    `mapstructure:"speed"`
+	Red            int    `mapstructure:"red"`
+	Green          int    `mapstructure:"green"`
+	Blue           int    `mapstructure:"blue"`
+	Map            []Map  `mapstructure:"map"`
+	RandomDecay    bool   `mapstructure:"random_decay"`
+	TrailDecay     int    `mapstructure:"trail_decay"`
+	Size           int    `mapstructure:"size"`
+	OneLedPerScene bool   `mapstructure:"one_led_per_scene"`
+	HeatKey        int    `mapstructure:"heat_key"`
+	Cooling        int    `mapstructure:"cooling"`
+	Sparking       int    `mapstructure:"sparking"`
 }
 
 type Map struct {
@@ -42,17 +46,24 @@ type Map struct {
 }
 
 const (
-	ledPinDefault        = 18
-	ledCountDefault      = 64
-	ledBrightnessDefault = 128
-	OutputLedStrip       = "ledstrip"
-	OutputStdout         = "stdout"
-	iterationsDefault    = 50
-	waitTimeDefault      = 100
-	redDefault           = 128
-	greenDefault         = 128
-	blueDefault          = 128
-	speedDefault         = 100
+	ledPinDefault         = 18
+	ledCountDefault       = 64
+	ledBrightnessDefault  = 128
+	OutputLedStrip        = "ledstrip"
+	OutputStdout          = "stdout"
+	iterationsDefault     = 50
+	waitTimeDefault       = 100
+	redDefault            = 128
+	greenDefault          = 128
+	blueDefault           = 128
+	speedDefault          = 100
+	randomDecayDefault    = true
+	trailDecayDefault     = 64
+	sizeDefault           = 5
+	oneLedPerSceneDefault = true
+	heatKeyDefault        = 0
+	coolingDefault        = 75
+	sparkingDefault       = 150
 )
 
 func ParseConfig() (*Config, error) {
@@ -105,7 +116,13 @@ func setDefaults() {
 	viper.SetDefault("blue", blueDefault)
 	viper.SetDefault("map", make([]Map, 0))
 
-	viper.SetDefault("random_decay", true)
-	viper.SetDefault("trail_decay", 64)
-	viper.SetDefault("size", 5)
+	viper.SetDefault("random_decay", randomDecayDefault)
+	viper.SetDefault("trail_decay", trailDecayDefault)
+	viper.SetDefault("size", sizeDefault)
+
+	viper.SetDefault("one_led_per_scene", oneLedPerSceneDefault)
+
+	viper.SetDefault("heat_key", heatKeyDefault)
+	viper.SetDefault("cooling", coolingDefault)
+	viper.SetDefault("sparking", sparkingDefault)
 }
