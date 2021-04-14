@@ -23,6 +23,7 @@ func (s strobe) Run(o output.Output, c config.Program, wg *sync.WaitGroup) {
 		setLEDColorInRange(o, c.Start, c.End, c.Red, c.Green, c.Blue)
 		sleepMilliseconds(c.WaitTime)
 		setLEDColorInRange(o, c.Start, c.End, 0, 0, 0)
+		sleepMilliseconds(c.WaitTime)
 	}
 }
 

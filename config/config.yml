@@ -12,19 +12,96 @@ led_count: 300
 led_brightness: 128
 
 scenes:
-  - name: test
+  - name: meteor
+    interval: 1
+    programs:
+      - key: meteor_rain
+        start: 0
+        end: 300
+        red: 50
+        green: 100
+        blue: 200
+        size: 5
+        random_decay: true
+        trail_decay: 64
+        wait_time: 50
+  - name: sparkle
+    interval: 100
+    programs:
+      - key: sparkle
+        start: 0
+        end: 150
+        red: 120
+        green: 100
+        blue: 200
+        wait_time: 50
+      - key: snow_sparkle
+        start: 150
+        end: 300
+        red: 200
+        green: 0
+        blue: 150
+        wait_time: 50
+  - name: static_color
+    interval: 1
+    programs:
+      - key: static_color
+        start: 0
+        end: 150
+        red: 120
+        green: 100
+        blue: 200
+        wait_time: 3000
+      - key: static_rainbow
+        start: 150
+        end: 300
+        wait_time: 3000
+  - name: running_lights
+    interval: 1
+    programs:
+      - key: running_lights
+        start: 0
+        end: 150
+        wait_time: 50
+        red: 100
+        green: 200
+        blue: 255
+      - key: running_lights_reverse
+        start: 150
+        end: 300
+        wait_time: 50
+        red: 100
+        green: 200
+        blue: 255
+  - name: strobe
+    interval: 1
+    programs:
+      - key: strobe
+        start: 0
+        end: 300
+        iterations: 10
+        wait_time: 100
+        red: 250
+        green: 50
+        blue: 10
+  - name: rainbows
     interval: 1
     programs:
       - key: ranged_rainbow_cycle
+        iterations: 1700
+        wait_time: 5
         start: 0
-        end: 100
-      - key: ranged_rainbow_cycle
-        start: 200
+        end: 150
+      - key: theater_rainbow_chase
+        iterations: 100
+        wait_time: 50
+        start: 150
         end: 300
   - name: map
     interval: 1
     programs:
       - key: mapper
+        wait_time: 3000
         map:
           - min: 1
             max: 25
@@ -38,3 +115,27 @@ scenes:
             max: 275
           - min: 275
             max: 300
+  - name: chaos_colors
+    interval: 1
+    programs:
+      - key: chaos_colors
+        wait_time: 3000
+        start: 0
+        end: 300
+  - name: color_chasers
+    interval: 1
+    programs:
+      - key: color_chase
+        start: 0
+        end: 150
+        red: 150
+        green: 130
+        blue: 115
+        wait_time: 10
+      - key: color_chase_reverse
+        start: 151
+        end: 299
+        red: 60
+        green: 70
+        blue: 80
+        wait_time: 10

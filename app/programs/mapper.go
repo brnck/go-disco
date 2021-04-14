@@ -41,6 +41,7 @@ func (m mapper) Run(o output.Output, c config.Program, wg *sync.WaitGroup) {
 		}
 	}
 	o.Render()
+	sleepMilliseconds(c.WaitTime)
 }
 
 func NewMapper() *mapper {

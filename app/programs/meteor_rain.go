@@ -4,9 +4,7 @@ import (
 	"github.com/brnck/go-disco/app/config"
 	"github.com/brnck/go-disco/app/output"
 	"github.com/brnck/go-disco/app/utils"
-	"math/rand"
 	"sync"
-	"time"
 )
 
 const meteorRainName = "meteor_rain"
@@ -25,7 +23,6 @@ func (mr meteorRain) Run(o output.Output, c config.Program, wg *sync.WaitGroup) 
 	setLEDColorInRange(o, c.Start, c.End, 0, 0, 0)
 	for i := c.Start; i < c.End; i++ {
 		for j := c.Start; j < c.End; j++ {
-			rand.Seed(time.Now().UnixNano())
 			if !c.RandomDecay || randomNumberBetween(0, 10) > 5 {
 				fadeToBlack(o, j, uint32(c.TrailDecay))
 			}

@@ -20,12 +20,14 @@ func (s sparkle) getName() string {
 func (s sparkle) Run(o output.Output, c config.Program, wg *sync.WaitGroup) {
 	defer wg.Done()
 
+	setLEDColorInRange(o, c.Start, c.End, 0, 0, 0)
 	pixel := randomNumberBetween(c.Start, c.End)
 
 	o.SetLed(pixel, utils.RgbToColor(c.Red, c.Green, c.Blue))
 	o.Render()
 
 	sleepMilliseconds(c.WaitTime)
+
 	o.SetLed(pixel, utils.RgbToColor(0, 0, 0))
 	o.Render()
 }

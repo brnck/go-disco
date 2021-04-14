@@ -134,6 +134,7 @@ func (a *App) Run() error {
 			sp.SetProgram(p)
 			sp.SetProgramConfig(program)
 			a.scenes.AddProgram(sp)
+			a.scenes.SetInterval(scene.Interval)
 		}
 		a.scenes.Execute(a.Output)
 	}

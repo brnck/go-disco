@@ -42,7 +42,7 @@ func (cfd chaosFillDown) Run(o output.Output, c config.Program, wg *sync.WaitGro
 	sleepMilliseconds(c.WaitTime)
 
 	for i := c.End - 1; i > c.Start; i-- {
-		for j := c.End; i > c.Start; j-- {
+		for j := c.End; j > c.Start; j-- {
 			oldColor := o.GetLedColor(j - 1)
 			o.SetLed(j, oldColor)
 		}

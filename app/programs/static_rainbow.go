@@ -27,6 +27,7 @@ func (sr staticRainbow) Run(o output.Output, c config.Program, wg *sync.WaitGrou
 		}
 	}
 	o.Render()
+	sleepMilliseconds(c.WaitTime)
 }
 
 func NewStaticRainbow() *staticRainbow {

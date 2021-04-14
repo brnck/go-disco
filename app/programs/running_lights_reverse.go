@@ -32,7 +32,7 @@ func (rlr runningLightsReverse) Run(o output.Output, c config.Program, wg *sync.
 			g := int(math.Floor(ratio * float64(c.Green)))
 			b := int(math.Floor(ratio * float64(c.Blue)))
 
-			o.SetLed(j, utils.RgbToColor(r, g, b))
+			o.SetLed(j-1, utils.RgbToColor(r, g, b))
 		}
 
 		o.Render()
