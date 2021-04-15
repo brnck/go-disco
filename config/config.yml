@@ -12,6 +12,36 @@ led_count: 300
 led_brightness: 128
 
 scenes:
+  - name: twinkle
+    interval: 1
+    programs:
+      - key: twinkle
+        start: 0
+        end: 150
+        red: 50
+        green: 50
+        blue: 150
+        one_led_per_scene: false
+        wait_time: 10
+        iterations: 100
+      - key: twinkle_random
+        start: 150
+        end: 300
+        wait_time: 10
+        iterations: 100
+        one_led_per_scene: true
+  - name: chaos_colors
+    interval: 1
+    programs:
+      - key: chaos_colors
+        wait_time: 1000
+        start: 0
+        end: 150
+      - key: chaos_fill_down
+        wait_time: 1000
+        speed: 10
+        start: 150
+        end: 300
   - name: meteor
     interval: 1
     programs:
@@ -115,13 +145,6 @@ scenes:
             max: 275
           - min: 275
             max: 300
-  - name: chaos_colors
-    interval: 1
-    programs:
-      - key: chaos_colors
-        wait_time: 3000
-        start: 0
-        end: 300
   - name: color_chasers
     interval: 1
     programs:

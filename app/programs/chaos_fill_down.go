@@ -27,27 +27,25 @@ func (cfd chaosFillDown) Run(o output.Output, c config.Program, wg *sync.WaitGro
 		g := randomNumberBetween(0, 256)
 		b := randomNumberBetween(0, 256)
 
-		for j := c.Start; j < c.End-i; j++ {
-			o.SetLed(j, utils.RgbToColor(r, g, b))
+		o.SetLed(i, utils.RgbToColor(r, g, b))
 
-			if j > 0 {
-				o.SetLed(j-1, utils.RgbToColor(r, g, b))
-			}
-
-			sleepMilliseconds(c.Speed)
+		if i > 0 {
+			o.SetLed(i-1, utils.RgbToColor(r, g, b))
 		}
+
 		o.Render()
+		sleepMilliseconds(c.Speed)
 	}
 
 	sleepMilliseconds(c.WaitTime)
 
-	for i := c.End - 1; i > c.Start; i-- {
-		for j := c.End; j > c.Start; j-- {
+	for i := c.Start; i < c.End; i++ {
+		for j := c.End - 1; j > c.Start; j-- {
 			oldColor := o.GetLedColor(j - 1)
 			o.SetLed(j, oldColor)
 		}
 
-		o.SetLed(i-c.End+1, utils.RgbToColor(0, 0, 0))
+		o.SetLed(i, utils.RgbToColor(0, 0, 0))
 		o.Render()
 		sleepMilliseconds(c.Speed)
 	}

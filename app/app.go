@@ -83,12 +83,6 @@ func registerPrograms(app *App) error {
 	if err := app.programs.AddProgram(programs.NewColorChaseReverse()); err != nil {
 		return err
 	}
-	if err := app.programs.AddProgram(programs.NewFadeRgb()); err != nil {
-		return err
-	}
-	if err := app.programs.AddProgram(programs.NewFadeInOut()); err != nil {
-		return err
-	}
 	if err := app.programs.AddProgram(programs.NewMeteorRain()); err != nil {
 		return err
 	}
