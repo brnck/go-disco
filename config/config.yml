@@ -1,6 +1,6 @@
 ---
 # Supported outputs: stdout, ledstrip
-output: stdout
+output: ledstrip
 
 # GPIO pin connected to the pixels (18 uses PWM!).
 led_pin: 18
@@ -12,42 +12,156 @@ led_count: 300
 led_brightness: 128
 
 scenes:
-  - name: twinkle
+  - name: rainbows
     interval: 1
     programs:
-      - key: twinkle
-        start: 0
-        end: 150
-        red: 50
-        green: 50
-        blue: 150
-        one_led_per_scene: false
-        wait_time: 10
+      - key: theater_rainbow_chase
         iterations: 100
-      - key: twinkle_random
-        start: 150
-        end: 300
-        wait_time: 10
+        wait_time: 50
+        start: 25
+        end: 95
+      - key: ranged_rainbow_cycle
+        iterations: 1590
+        wait_time: 5
+        start: 95
+        end: 183
+      - key: theater_rainbow_chase
         iterations: 100
-        one_led_per_scene: true
+        wait_time: 50
+        start: 183
+        end: 250
   - name: chaos_colors
     interval: 1
     programs:
       - key: chaos_colors
         wait_time: 1000
-        start: 0
-        end: 150
+        start: 95
+        end: 183
       - key: chaos_fill_down
-        wait_time: 1000
+        wait_time: 3000
         speed: 10
-        start: 150
-        end: 300
-  - name: meteor
+        start: 25
+        end: 95
+      - key: chaos_fill_down
+        wait_time: 3000
+        speed: 10
+        start: 183
+        end: 250
+  - name: running_lights
+    interval: 1
+    programs:
+      - key: running_lights
+        start: 25
+        end: 95
+        wait_time: 50
+        red: 100
+        green: 200
+        blue: 255
+      - key: static_color
+        start: 95
+        end: 183
+        red: 120
+        green: 100
+        blue: 200
+        wait_time: 3000
+      - key: running_lights_reverse
+        start: 183
+        end: 250
+        wait_time: 50
+        red: 100
+        green: 200
+        blue: 255
+  - name: color_chasers
+    interval: 1
+    programs:
+      - key: color_chase
+        start: 25
+        end: 95
+        red: 150
+        green: 130
+        blue: 115
+        wait_time: 10
+      - key: static_color
+        start: 95
+        end: 183
+        red: 120
+        green: 100
+        blue: 200
+        wait_time: 3000
+      - key: color_chase_reverse
+        start: 183
+        end: 250
+        red: 60
+        green: 70
+        blue: 80
+        wait_time: 10
+  - name: strobe
+    interval: 1
+    programs:
+      - key: strobe
+        start: 25
+        end: 250
+        iterations: 10
+        wait_time: 100
+        red: 100
+        green: 50
+        blue: 250
+  - name: fire
+    interval: 1
+    programs:
+      - key: static_color
+        start: 95
+        end: 183
+        red: 255
+        green: 100
+        blue: 200
+        wait_time: 3000
+      - key: fire
+        iterations: 150
+        start: 25
+        end: 95
+        heat_key: 0
+        cooling: 75
+        sparking: 150
+        wait_time: 50
+      - key: fire
+        iterations: 150
+        start: 183
+        end: 250
+        heat_key: 1
+        cooling: 75
+        sparking: 150
+        wait_time: 50
+  - name: map
+    interval: 1
+    programs:
+      - key: mapper
+        wait_time: 3000
+        map:
+          - min: 25
+            max: 95
+          - min: 95
+            max: 183
+          - min: 183
+            max: 250
+  - name: center
+    interval: 1
+    programs:
+      - key: center_to_outside
+        start: 95
+        end: 183
+        size: 8
+        red: 100
+        green: 150
+        blue: 150
+        speed: 50
+        wait_time: 10
+  - name: directional
     interval: 1
     programs:
       - key: meteor_rain
-        start: 0
-        end: 300
+        start: 95
+        end: 183
         red: 50
         green: 100
         blue: 200
@@ -55,110 +169,113 @@ scenes:
         random_decay: true
         trail_decay: 64
         wait_time: 50
-  - name: sparkle
-    interval: 100
-    programs:
-      - key: sparkle
-        start: 0
-        end: 150
-        red: 120
-        green: 100
-        blue: 200
-        wait_time: 50
-      - key: snow_sparkle
-        start: 150
-        end: 300
-        red: 200
-        green: 0
+      - key: left_to_right
+        start: 25
+        end: 95
+        size: 8
+        red: 100
+        green: 150
         blue: 150
-        wait_time: 50
-  - name: static_color
-    interval: 1
-    programs:
-      - key: static_color
-        start: 0
-        end: 150
-        red: 120
-        green: 100
-        blue: 200
-        wait_time: 3000
-      - key: static_rainbow
-        start: 150
-        end: 300
-        wait_time: 3000
-  - name: running_lights
-    interval: 1
-    programs:
-      - key: running_lights
-        start: 0
-        end: 150
-        wait_time: 50
-        red: 100
-        green: 200
-        blue: 255
-      - key: running_lights_reverse
-        start: 150
-        end: 300
-        wait_time: 50
-        red: 100
-        green: 200
-        blue: 255
-  - name: strobe
-    interval: 1
-    programs:
-      - key: strobe
-        start: 0
-        end: 300
-        iterations: 10
+        speed: 10
         wait_time: 100
-        red: 250
+      - key: right_to_left
+        start: 183
+        end: 250
+        size: 8
+        red: 100
+        green: 150
+        blue: 150
+        speed: 10
+        wait_time: 100
+  - name: twinkle
+    interval: 1
+    programs:
+      - key: twinkle
+        start: 25
+        end: 95
+        red: 50
         green: 50
-        blue: 10
-  - name: rainbows
-    interval: 1
-    programs:
-      - key: ranged_rainbow_cycle
-        iterations: 1700
-        wait_time: 5
-        start: 0
-        end: 150
-      - key: theater_rainbow_chase
-        iterations: 100
-        wait_time: 50
-        start: 150
-        end: 300
-  - name: map
-    interval: 1
-    programs:
-      - key: mapper
-        wait_time: 3000
-        map:
-          - min: 1
-            max: 25
-          - min: 25
-            max: 50
-          - min: 50
-            max: 150
-          - min: 150
-            max: 250
-          - min: 250
-            max: 275
-          - min: 275
-            max: 300
-  - name: color_chasers
-    interval: 1
-    programs:
-      - key: color_chase
-        start: 0
-        end: 150
-        red: 150
-        green: 130
-        blue: 115
+        blue: 150
+        one_led_per_scene: false
         wait_time: 10
-      - key: color_chase_reverse
-        start: 151
-        end: 299
-        red: 60
-        green: 70
-        blue: 80
+        iterations: 50
+      - key: twinkle_random
+        start: 95
+        end: 183
         wait_time: 10
+        iterations: 50
+        one_led_per_scene: true
+      - key: twinkle
+        start: 183
+        end: 250
+        red: 50
+        green: 50
+        blue: 150
+        one_led_per_scene: false
+        wait_time: 10
+        iterations: 50
+#  - name: center
+#    interval: 1
+#    programs:
+#      - key: center_to_outside
+#        start: 150
+#        end: 300
+#        size: 8
+#        red: 100
+#        green: 150
+#        blue: 150
+#        speed: 10
+#        wait_time: 3000
+#      - key: outside_to_center
+#        start: 0
+#        end: 150
+#        size: 8
+#        red: 100
+#        green: 150
+#        blue: 150
+#        speed: 10
+#        wait_time: 3000
+#  - name: sparkle
+#    interval: 100
+#    programs:
+#      - key: sparkle
+#        start: 0
+#        end: 150
+#        red: 120
+#        green: 100
+#        blue: 200
+#        wait_time: 50
+#      - key: snow_sparkle
+#        start: 150
+#        end: 300
+#        red: 200
+#        green: 0
+#        blue: 150
+#        wait_time: 50
+#  - name: static_color
+#    interval: 1
+#    programs:
+#      - key: static_color
+#        start: 0
+#        end: 150
+#        red: 120
+#        green: 100
+#        blue: 200
+#        wait_time: 3000
+#      - key: static_rainbow
+#        start: 150
+#        end: 300
+#        wait_time: 3000
+#  - name: rainbows
+#    interval: 1
+#    programs:
+#      - key: ranged_rainbow_cycle
+#        iterations: 1700
+#        wait_time: 5
+#        start: 0
+#        end: 150
+#      - key: theater_rainbow_chase
+#        iterations: 100
+#        wait_time: 50
+#        start: 150
+#        end: 300

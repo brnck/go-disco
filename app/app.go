@@ -1,19 +1,18 @@
 package app
 
 import (
-	"github.com/brnck/go-disco/app/config"
-	"github.com/brnck/go-disco/app/output"
-	"github.com/brnck/go-disco/app/programs"
-	"github.com/brnck/go-disco/app/scenes"
+	"github.com/brnck/go-disco/pkg/output"
+	"github.com/brnck/go-disco/pkg/program"
+	scenes "github.com/brnck/go-disco/pkg/scene"
 	"log"
 	"os"
 )
 
 type App struct {
 	Output   output.Output
-	Config   *config.Config
+	Config   *Config
 	Logger   *log.Logger
-	programs *programs.Programs
+	programs *program.Programs
 	scenes   *scenes.Scene
 }
 
@@ -25,108 +24,49 @@ func (a *App) setLogger(l *log.Logger) {
 	a.Logger = l
 }
 
-func (a *App) setConfig(c *config.Config) {
+func (a *App) setConfig(c *Config) {
 	a.Config = c
 }
 
-func Init() (*App, error) {
+func (a *App) setPrograms(p *program.Programs) {
+	a.programs = p
+}
+
+func New() (*App, error) {
 	app := &App{
-		Logger:   log.New(os.Stdout, "", log.LstdFlags),
-		programs: programs.New(),
-		scenes:   scenes.New(),
+		Logger: log.New(os.Stdout, "", log.LstdFlags),
+		scenes: scenes.New(),
 	}
 
-	cfg, err := config.ParseConfig()
+	cfg, err := parseConfig()
 	if err != nil {
 		return nil, err
 	}
 	app.setConfig(cfg)
 
-	out, err := output.InitializeOutput(app.Config, app.Logger)
+	out, err := output.InitializeOutput(app.Config.Output, buildOutputConfig(app.Config), app.Logger)
 	if err != nil {
 		return nil, err
 	}
 	app.setOutput(out)
 
-	if err := registerPrograms(app); err != nil {
+	programs, err := program.New()
+	if err != nil {
 		return nil, err
 	}
+	app.setPrograms(programs)
 
 	return app, nil
 }
 
-func registerPrograms(app *App) error {
-	if err := app.programs.AddProgram(programs.NewTheaterChase()); err != nil {
-		return err
-	}
-	if err := app.programs.AddProgram(programs.NewTheaterRainbowChase()); err != nil {
-		return err
-	}
-	if err := app.programs.AddProgram(programs.NewRangedRainbowCycle()); err != nil {
-		return err
-	}
-	if err := app.programs.AddProgram(programs.NewStrobe()); err != nil {
-		return err
-	}
-	if err := app.programs.AddProgram(programs.NewMapper()); err != nil {
-		return err
-	}
-	if err := app.programs.AddProgram(programs.NewChaosColors()); err != nil {
-		return err
-	}
-	if err := app.programs.AddProgram(programs.NewChaosFillDown()); err != nil {
-		return err
-	}
-	if err := app.programs.AddProgram(programs.NewColorChase()); err != nil {
-		return err
-	}
-	if err := app.programs.AddProgram(programs.NewColorChaseReverse()); err != nil {
-		return err
-	}
-	if err := app.programs.AddProgram(programs.NewMeteorRain()); err != nil {
-		return err
-	}
-	if err := app.programs.AddProgram(programs.NewStaticRainbow()); err != nil {
-		return err
-	}
-	if err := app.programs.AddProgram(programs.NewSparkle()); err != nil {
-		return err
-	}
-	if err := app.programs.AddProgram(programs.NewSnowSparkle()); err != nil {
-		return err
-	}
-	if err := app.programs.AddProgram(programs.NewStaticColor()); err != nil {
-		return err
-	}
-	if err := app.programs.AddProgram(programs.NewRunningLightsReverse()); err != nil {
-		return err
-	}
-	if err := app.programs.AddProgram(programs.NewRunningLights()); err != nil {
-		return err
-	}
-	if err := app.programs.AddProgram(programs.NewTwinkle()); err != nil {
-		return err
-	}
-	if err := app.programs.AddProgram(programs.NewTwinkleRandom()); err != nil {
-		return err
-	}
-	if err := app.programs.AddProgram(programs.NewFire()); err != nil {
-		return err
-	}
-
-	return nil
-}
-
 func (a *App) Run() error {
 	for _, scene := range a.Config.Scenes {
-		sp := scenes.NewSceneProgram()
-		for _, program := range scene.Programs {
-			p, err := a.programs.GetProgram(program.Key)
+		for _, liveProgram := range scene.Programs {
+			p, err := a.programs.GetProgram(liveProgram.Key)
 			if err != nil {
 				return nil
 			}
-			sp.SetProgram(p)
-			sp.SetProgramConfig(program)
+			sp := scenes.NewSceneProgram(p, liveProgram)
 			a.scenes.AddProgram(sp)
 			a.scenes.SetInterval(scene.Interval)
 		}
