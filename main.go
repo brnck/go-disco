@@ -25,11 +25,8 @@ func main() {
 		}
 	}()
 
-	for {
-		app.Logger.Printf("Running iteration")
-		if err := app.Run(); err != nil {
-			panic(err)
-		}
+	app.Logger.Printf("Running iteration")
+	if err := app.Run(); err != nil {
+		panic(err)
 	}
-
 }

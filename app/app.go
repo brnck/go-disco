@@ -70,6 +70,7 @@ func (a *App) Run() error {
 			a.scenes.AddProgram(sp)
 			a.scenes.SetInterval(scene.Interval)
 		}
+		a.Logger.Printf("Running scene: %s", scene.Name)
 		a.scenes.Execute(a.Output)
 	}
 

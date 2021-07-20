@@ -22,7 +22,7 @@ func (rl runningLights) Run(o output.Output, c Config, wg *sync.WaitGroup) {
 	defer wg.Done()
 
 	position := 0
-	for i := c.Start; i < c.End*2; i++ {
+	for i := c.Start; i < c.Iterations; i++ {
 		position += 1
 
 		for j := c.Start; j < c.End; j++ {
